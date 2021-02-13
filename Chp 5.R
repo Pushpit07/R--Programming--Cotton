@@ -48,4 +48,27 @@ c(list(a = 1, b = 2), list(3))
 length(NULL)
 length(NA)
 
-options
+(a_data_frame <- data.frame(x=letters[1:5], y=rnorm(5), z=runif(5) > 0.5))
+class(a_data_frame)
+
+y <- rnorm(5)
+names(y) <- month.name[1:5]
+data.frame(
+  x = letters[1:5],
+  y = y,
+  z = runif(5) > 0.5
+)
+
+
+another_data_frame <- data.frame( 
+  z = rlnorm(5), #lognormally distributed numbers
+  y = sample(5), #the numbers 1 to 5, in some order
+  x = letters[3:7]
+)
+rbind(a_data_frame, another_data_frame)
+
+cbind(a_data_frame, another_data_frame)
+
+
+colSums(a_data_frame[, 2:3])
+colMeans(a_data_frame[, 2:3])
