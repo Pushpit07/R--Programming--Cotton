@@ -67,7 +67,7 @@ another_data_frame <- data.frame(
 )
 rbind(a_data_frame, another_data_frame)
 
-cbind(a_data_frame, another_data_frame)
+cbind(a_data_frame, another_data_frame``)
 
 
 colSums(a_data_frame[, 2:3])
