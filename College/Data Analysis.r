@@ -8,7 +8,7 @@ kidney #to read the data set
 head(kidney) # First 6 rows
 tail(kidney) # Last 6 rows
 getwd()
-setwd("C:/Onkar/Work/BSC/E-Teaching/R/Data Files")
+setwd("/Users/pushpitbhardwaj/Desktop/sem4/R/R_Cotton/College")
 read.csv(file = "Mall_Customers.csv")
 customers <- data.frame(read.csv(file = "Mall_Customers.csv"))
 str(customers)
@@ -51,7 +51,7 @@ read_xlsx("cust.xlsx", skip = 2, n_max = 10)
 
 covid_statewise <- "https://api.covid19india.org/csv/latest/states.csv"
 covid_statewise <- read.csv(covid_statewise)
-
+covid_statewise
 #More advanced access to web pages can be achieved through the RCurl package, which
 #provides access to the libcurl network client interface library. This is particularly useful
 #if your data is contained inside an HTML or XML page, rather than a standard data

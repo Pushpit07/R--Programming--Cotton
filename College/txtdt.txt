@@ -1,0 +1,14 @@
+Detailed Syllabus
+Unit 1
+Introduction: R interpreter, Introduction to major R data structures like vectors, matrices,
+arrays, list and data frames, Control Structures, vectorized if and multiple selection, functions.
+Unit 2
+Installing, loading and using packages: Read/write data from/in files, extracting data from
+web-sites, Clean data, Transform data by sorting, adding/removing new/existing columns,
+centring, scaling and normalizing the data values, converting types of values, using string in-built
+functions, Statistical analysis of data for summarizing and understanding data, Visualizing data
+using scatter plot, line plot, bar chart, histogram and box plot
+Unit 3
+Designing GUI: Building interactive application and connecting it with database.
+Unit 4
+Building Packages.
