@@ -1,0 +1,120 @@
+data(obama_vs_mccain, package = "learningr")
+obama <- obama_vs_mccain$Obama
+mean(obama)
+## [1] 51.29
+median(obama)
+## [1] 51.38
+table(cut(obama, seq.int(0, 100, 10)))
+
+var(obama)
+sd(obama)
+mad(obama)
+
+min(obama)
+with(obama_vs_mccain, pmin(Obama, McCain))
+range(obama)
+
+cummin(obama)
+cumsum(obama)
+cumprod(obama)
+
+quantile(obama)
+quantile(obama, type = 5) #to reproduce SAS results
+quantile(obama, c(0.9, 0.95, 0.99))
+IQR(obama)
+
+fivenum(obama)
+
+summary(obama_vs_mccain)
+
+with(obama_vs_mccain, cor(Obama, McCain))
+with(obama_vs_mccain, cancor(Obama, McCain))
+with(obama_vs_mccain, cov(Obama, McCain))
+
+
+
+obama_vs_mccain <- obama_vs_mccain[!is.na(obama_vs_mccain$Turnout), ]
+with(obama_vs_mccain, plot(Income, Turnout))
+with(obama_vs_mccain, plot(Income, Turnout, col = "violet", pch = 20))
+
+with(obama_vs_mccain, plot(Income, Turnout, log = "y"))
+with(obama_vs_mccain, plot(Income, Turnout, log = "xy"))
+
+
+par(mar = c(3, 3, 0.5, 0.5), oma = rep.int(0, 4), mgp = c(2, 1, 0)) 
+regions <- levels(obama_vs_mccain$Region)
+plot_numbers <- seq_along(regions)
+layout(matrix(plot_numbers, ncol = 5, byrow = TRUE))
+for(region in regions) {
+  regional_data <- subset(obama_vs_mccain, Region == region)
+  with(regional_data,  plot(Income, Turnout))
+}
+
+
+library(lattice)
+xyplot(Turnout ~ Income, obama_vs_mccain)
+xyplot(Turnout ~ Income, obama_vs_mccain, col = "blue", pch = 8)
+
+
+
+xyplot(
+  Turnout ~ Income, 
+  obama_vs_mccain,
+  scales = list(log = TRUE)
+)#both axes log scaled
+xyplot(
+  Turnout ~ Income,
+  obama_vs_mccain,
+  scales = list(y = list(log = TRUE)) #y-axis log scaled
+)
+
+
+xyplot(
+  Turnout ~ Income | Region,
+  obama_vs_mccain,
+  scales = list(
+    log = TRUE, relation = "same", alternating = FALSE
+  ),
+  layout = c(5, 2)
+)
+
+
+(lat1 <- xyplot(
+  Turnout ~ Income | Region,
+  obama_vs_mccain
+))
+(lat2 <- update(lat1, col = "violet", pch = 20))
+
+
+
+
+install.packages('ggplot2')
+library(ggplot2)
+ggplot(obama_vs_mccain, aes(Income, Turnout)) +
+  geom_point()
+
+ggplot(obama_vs_mccain, aes(Income, Turnout)) +
+  geom_point(color = "blue", shape = 4)
+
+
+ggplot(obama_vs_mccain, aes(Income, Turnout)) +
+  geom_point() +
+  scale_x_log10(breaks = seq(2e4, 4e4, 1e4)) +
+  scale_y_log10(breaks = seq(50, 75, 5))
+
+
+ggplot(obama_vs_mccain, aes(Income, Turnout)) +
+  geom_point() +
+  scale_x_log10(breaks = seq(2e4, 4e4, 1e4)) +
+  scale_y_log10(breaks = seq(50, 75, 5)) +
+  facet_wrap(~ Region, ncol = 4)
+
+
+(gg1 <- ggplot(obama_vs_mccain, aes(Income, Turnout)) +
+    geom_point()
+)
+
+(gg2 <- gg1 +
+    facet_wrap(~ Region, ncol = 5) +
+    theme(axis.text.x = element_text(angle = 30, hjust = 1))
+)
