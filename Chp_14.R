@@ -118,3 +118,135 @@ ggplot(obama_vs_mccain, aes(Income, Turnout)) +
     facet_wrap(~ Region, ncol = 5) +
     theme(axis.text.x = element_text(angle = 30, hjust = 1))
 )
+
+
+
+# Line plots
+data(crab_tag, package = "learningr")
+
+with(
+  crab_tag$daylog,
+  plot(Date, -Max.Depth, type = "l", ylim = c(-max(Max.Depth), 0))
+)
+
+with(
+  crab_tag$daylog,
+  lines(Date, -Min.Depth, col = "blue")
+)
+
+
+xyplot(-Min.Depth + -Max.Depth ~ Date, crab_tag$daylog, type = "l")
+
+ggplot(crab_tag$daylog, aes(Date, -Min.Depth)) +
+  geom_line()
+
+ggplot(crab_tag$daylog, aes(Date)) +
+  geom_line(aes(y = -Max.Depth)) +
+  geom_line(aes(y = -Min.Depth))
+
+
+library(reshape2)
+crab_long <- melt(
+  crab_tag$daylog,
+  id.vars      = "Date",
+  measure.vars = c("Min.Depth", "Max.Depth")
+)
+ggplot(crab_long, aes(Date, -value, group = variable)) +
+  geom_line()
+
+ggplot(crab_tag$daylog, aes(Date, ymin = -Min.Depth, ymax = -Max.Depth)) +
+  geom_ribbon(color = "black", fill = "white")
+
+
+
+
+# Histograms
+with(obama_vs_mccain, hist(Obama))
+
+with(obama_vs_mccain,
+     hist(Obama, 4, main = "An exact number of bins")
+)
+
+with(obama_vs_mccain,
+     hist(Obama, seq.int(0, 100, 5), main = "A vector of bin edges")
+)
+
+with(obama_vs_mccain,
+     hist(Obama, "FD", main = "The name of a method")
+)
+
+with(obama_vs_mccain,
+     hist(Obama, nclass.scott, main = "A function for the number of bins")
+)
+
+binner <- function(x) {
+  seq(min(x, na.rm = TRUE), max(x, na.rm = TRUE), length.out = 50) 
+}
+with(obama_vs_mccain,
+     hist(Obama, binner, main = "A function for the bin edges")
+)
+
+histogram(~ Obama, obama_vs_mccain)
+histogram(~ Obama, obama_vs_mccain, breaks = 10)
+histogram(~ Obama, obama_vs_mccain, type = "percent")
+
+ggplot(obama_vs_mccain, aes(Obama)) +
+  geom_histogram(binwidth = 5)
+
+ggplot(obama_vs_mccain, aes(Obama, ..density..)) +
+  geom_histogram(binwidth = 5)
+
+
+
+# Boxplots
+boxplot(Obama ~ Region, data = obama_vs_mccain)
+
+ovm <- within(
+  obama_vs_mccain,
+  Region <- reorder(Region, Obama, median)
+)
+boxplot(Obama ~ Region, data = ovm)
+
+bwplot(Obama ~ Region, data = ovm)
+
+ggplot(ovm, aes(Region, Obama)) +
+  geom_boxplot()
+
+
+
+# Bar Charts
+ovm <- ovm[!(ovm$State %in% c("Alaska", "Hawaii")), ]
+
+par(las = 1, mar = c(3, 9, 1, 1))
+with(ovm, barplot(Catholic, names.arg = State, horiz = TRUE))
+
+
+religions <- with(ovm, rbind(Catholic, Protestant, Non.religious, Other)) 
+colnames(religions) <- ovm$State
+par(las = 1, mar = c(3, 9, 1, 1))
+barplot(religions, horiz = TRUE, beside = FALSE)
+
+barchart(State ~ Catholic, ovm)
+barchart(
+  State ~ Catholic + Protestant + Non.religious + Other, ovm,
+  stack = TRUE
+)
+
+
+religions_long <- melt(
+  ovm,
+  id.vars = "State",
+  measure.vars = c("Catholic", "Protestant", "Non.religious", "Other")
+)
+
+ggplot(religions_long, aes(State, value, fill = variable)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+
+ggplot(religions_long, aes(State, value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip()
+
+ggplot(religions_long, aes(State, value, fill = variable)) +
+  geom_bar(stat = "identity", position = "fill") +
+  coord_flip()
