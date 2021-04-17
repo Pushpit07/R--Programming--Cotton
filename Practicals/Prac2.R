@@ -58,4 +58,5 @@ ggplot(algae, aes(x = a1, fill = speed)) + geom_density(alpha = 0.3)
 
 # f) visualize the relationship between the frequencies of algae a1 
 #   and a6. Give the appropriate graph title, x-axis and y-axis title.
-ggplot(algae, aes(x = a1, y = a6))+ geom_point()
+ggplot(algae, aes(x = a1, y = a6))+ geom_point(color='purple') + theme_minimal() +
+  labs(x = 'Values of a1', y = 'Values of a6', title = 'Relationship between the frequencies of algae a1 and a6')
