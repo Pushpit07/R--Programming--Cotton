@@ -1,0 +1,10 @@
+Package: pkg9
+Type: Package
+Title: myMean
+Version: 1.0
+Date: 2021-04-24
+Author: TNC
+Maintainer: TNC@h4ck3r.com
+Description: myMean func
+License: What license is it under?
+RoxygenNote: 7.1.1
